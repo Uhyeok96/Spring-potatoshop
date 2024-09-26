@@ -1,0 +1,152 @@
+#chat-list {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: calc(100vh - 200px); /* header와 footer의 높이를 고려하여 높이를 설정 */
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat-list h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#chat-list li:last-child {
+  border-bottom: none;
+}
+
+#chat-list img {
+  width: 100px; /* 이미지 너비를 100px */
+  height: 100px; /* 이미지 높이를 100px */
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+#chat-list span {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+#chat-list {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 200px); /* header와 footer의 높이를 고려하여 높이를 설정 */
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat-list h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#chat-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#chat-list li {
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+#chat-list li:last-child {
+  border-bottom: none;
+}
+
+#chat-list table {
+  width: 100%;
+  border-collapse: collapse; /* 테이블 경계선 겹침 방지 */
+}
+
+#chat-list th, #chat-list td {
+  border: 1px solid #ccc; /* 테이블 셀 경계선 추가 */
+  padding: 10px; /* 셀 패딩 추가 */
+  text-align: left; /* 텍스트 정렬 */
+}
+
+#chat-list tr:nth-child(even) {
+  background-color: #f2f2f2; /* 짝수 행 배경색 변경 */
+}
+
+#chat-list tr:hover {
+  background-color: #e0e0e0; /* 마우스 오버 시 배경색 변경 */
+  
+}
+
+#chat-list tr {
+  height: 80px; /* 각 행의 높이를 40px로 고정 */
+}
+
+#chat-list th, #chat-list td {
+  border: 1px solid #ccc; /* 테이블 셀 경계선 추가 */
+  padding: 10px; /* 셀 패딩 추가 */
+  text-align: left; /* 텍스트 정렬 */
+}
+
+/* .profile_module{
+	height: 96px;
+    padding: 22px 18px 10px 18px;
+    box-sizing: border-box;
+	
+}
+
+.profile_info{
+	position: relative;
+    display: flex;
+    padding-right: 98px;
+}
+
+.profile_photo{    
+    position: relative;
+    width: 100px;
+    height: 100px;
+} 
+
+.profile_photo .mask {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url(https://static.nid.naver.com/images/web/user/img_bg_profile_thumb.png) 0 0;
+}
+
+.profile_user{
+	-webkit-box-flex: 1;
+    flex: 1;
+}
+
+.profile_name{
+	margin: -1px 0 2px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+	
+.go_chat{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 1px;
+    max-width: 200px;
+    font-size: 1.3rem;
+    line-height: 20px;
+} */
+	

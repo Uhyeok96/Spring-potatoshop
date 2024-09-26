@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+    <configuration>
+    <typeAliases>
+    <typeAlias alias="MemberVO" type="com.potato.domain.MemberVO"/>
+    <typeAlias alias="UserVO" type="com.potato.domain.UserVO"/>
+    <typeAlias alias="BoardVO" type="com.potato.domain.BoardVO"/>
+    <typeAlias alias="ReplyVO" type="com.potato.domain.ReplyVO"/>
+    <typeAlias alias="Re_replyVO" type="com.potato.domain.Re_replyVO"/>
+    <typeAlias alias="ReportVO" type="com.potato.domain.ReportVO"/>
+    <typeAlias alias="ChatVO" type="com.potato.domain.ChatVO"/>
+    <typeAlias alias="Chat_roomVO" type="com.potato.domain.Chat_roomVO"/>
+    <typeAlias alias="Login_checkVO" type="com.potato.domain.Login_checkVO"/>
+    <typeAlias alias="ComentsVO" type="com.potato.domain.ComentsVO"/>
+    <typeAlias alias="CartVO" type="com.potato.domain.CartVO"/>
+    <typeAlias alias="Board_member_cartVO" type="com.potato.domain.Board_member_cartVO"/>
+    <typeAlias alias="AlarmsVO" type="com.potato.domain.AlarmsVO"/>
+</typeAliases> 
+    	<mappers>
+    		<mapper resource="com/potato/mapper/Member_mapper.xml" />
+    		<mapper resource="com/potato/mapper/Chat_mapper.xml" />
+    		<mapper resource="com/potato/mapper/Etc_mapper.xml" />
+    		<mapper resource="com/potato/mapper/ReplyMapper.xml" />
+    		<mapper resource="com/potato/mapper/BoardMapper.xml" />
+    		<mapper resource="com/potato/mapper/AdminMapper.xml" />
+    	</mappers>
+    </configuration>
