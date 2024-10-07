@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.potato.mapper.User_mapper">
+	
+	<!-- 설문 후 회원의 온도 변경 -->
+    <select id="getTemperatureBySellerNumber" resultType="Long">
+        SELECT temper FROM user_table WHERE user_number = #{user_number}
+    </select>
+
+    <update id="updateTemperature">
+        UPDATE user_table
+        SET temper = #{newTemperature}
+        WHERE user_number = #{user_number}
+    </update>
+
+</mapper>

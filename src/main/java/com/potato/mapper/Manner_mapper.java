@@ -8,10 +8,10 @@ import com.potato.domain.MannerVO;
 
 @Mapper
 public interface Manner_mapper {
-	
-	// 회원의 매너칭찬 리스트 조회
-	List<MannerVO> findAllByMember(String member_number);
 
 	// 칭찬하기 데이터 전송
-	int incrementMannerCount(int manner_number, String member_number);
+	int insertManner(MannerVO manner);
+	
+	// 회원별 매너칭찬 리스트 출력
+	List<MannerVO> selectMannerItems(String member_number);
 }

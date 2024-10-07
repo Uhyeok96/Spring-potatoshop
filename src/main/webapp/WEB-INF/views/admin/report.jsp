@@ -9,12 +9,9 @@
     <link rel="stylesheet" href="/resources/css/memberList.css">
 </head>
 <body>
-    <div class="dashboard">
-        <header class="dashboard-header">
-            <h1 class="dashboard-title">포테이토 신고 관리 시스템</h1>
-        </header>
+
         <section class="section">
-            <h2 class="section-title"></h2>
+            <h2 class="section-title">신고 상세 정보</h2>
             <div class="container">
                 <div class="form-row">
                     <div class="form-group">
@@ -57,6 +54,5 @@
                 </div>
             </div>
         </section>
-    </div>
 </body>
 </html>

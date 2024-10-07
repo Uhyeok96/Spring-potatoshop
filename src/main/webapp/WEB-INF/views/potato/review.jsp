@@ -59,7 +59,6 @@
 			<div class="panel-heading" align="center" style="text-align: center;">
 			    <p></p>
 			    <button id='addReplyBtn' type="button" class="btn btn-success" style="float: right;">후기 등록</button>
-			    <button id='mannerButton' type="button" class="btn btn-warning" style="float: right; margin-right: 10px;">칭찬 등록</button>
 			</div>
 			<br><br><br>
 			
@@ -77,9 +76,7 @@
 			        </div>
 			        <div id="manner" class="tab-pane">
 					    <ul class="manner-list" id="mannerList">
-					        <%-- <c:forEach var="manner" items="${mannerList}">
-					            <li>${manner.description} - 선택 횟수: ${manner.mcount}</li>
-					        </c:forEach> --%>
+					        <!-- AJAX로 가져온 회원별 매너 정보 리스트가 여기에 출력됩니다. -->
 					    </ul>
 					</div>
 			    </div>
@@ -166,133 +163,57 @@
 </div>
 <!-- /.modal -->
 
-<!-- 칭찬 항목 선택을 위한 모달 -->
-<div id="mannerModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">칭찬 항목 선택</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <ul id="modalMannerList"></ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <button id="submitMannerBtn" type="button" class="btn btn-primary">등록</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
 <script>
+
+// 칭찬리스트 가져오기
 $(document).ready(function() {
-    // 칭찬 등록 버튼 클릭 시 모달 열기
-    $('#mannerButton').click(function() {
-        const memberNumber = '${member.member_number}'; // 현재 멤버 번호
-        
-        // 칭찬 항목 가져오기
-        $.getJSON('/manner/items/' + memberNumber, function(data) {
-            const modalMannerList = $('#modalMannerList');
-            modalMannerList.empty(); // 모달 내 목록 초기화
+            const member_number = '${member.member_number}'; // 여기에 현재 회원 번호를 설정하세요.
 
-            if (data && data.length) {
-                data.forEach(function(item) {
-                    modalMannerList.append(
-                        '<li>' +
-                        '<input type="radio" name="mannerItem" value="' + item.manner_number + '"> ' + item.description +
-                        '</li>'
-                    );
-                });
-            } else {
-                modalMannerList.append('<li>등록된 칭찬 항목이 없습니다.</li>');
-            }
+            $.ajax({
+                url: '/manner/items/' + member_number,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    const mannerCounts = {
+                        5: 0,
+                        4: 0,
+                        3: 0,
+                        2: 0,
+                        1: 0
+                    };
 
-            $('#mannerModal').modal('show'); // 모달 열기
-        }).fail(function() {
-            alert("칭찬 항목을 가져오는 데 실패했습니다.");
+                    // 각 등급별 카운트 증가
+                    $.each(data, function(index, manner) {
+                        if (manner.rating in mannerCounts) {
+                            mannerCounts[manner.rating]++;
+                        }
+                    });
+
+                    const mannerList = $('#mannerList');
+                    mannerList.empty(); // 기존 리스트 초기화
+
+                    // 각 매너 등급에 대한 결과 출력
+                    mannerList.append('<li>* 매우 만족한 거래였습니다. (' + mannerCounts[5] + '명)</li>');
+                    mannerList.append('<li>* 매너가 좋네요. (' + mannerCounts[4] + '명)</li>');
+                    mannerList.append('<li>* 잘 쓰겠습니다. (' + mannerCounts[3] + '명)</li>');
+                    mannerList.append('<li>* 약간 아쉬운 부분이 있었어요. (' + mannerCounts[2] + '명)</li>');
+                    mannerList.append('<li>* 최악이네요. (' + mannerCounts[1] + '명)</li>');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching manner items:', error);
+                    $('#mannerList').append('<li>데이터를 가져오는 중 오류가 발생했습니다.</li>');
+                }
+            });
         });
-    });
 
-    // 칭찬 항목 등록 버튼 클릭 시
-    $('#submitMannerBtn').click(function() {
-        const mannerItem = $('input[name="mannerItem"]:checked').val(); // 선택된 칭찬 항목
-        const memberNumber = '${member.member_number}';
-
-        if (!mannerItem) {
-            alert("칭찬 항목을 선택해 주세요.");
-            return;
-        }
-
-        // 칭찬하기 데이터 전송
-        $.ajax({
-            type: 'POST',
-            url: '/manner/submit', // URL 수정
-            data: { manner_number: mannerItem, member_number: memberNumber },
-            success: function(response) {
-                alert("칭찬이 등록되었습니다!");
-                $('#mannerModal').modal('hide'); // 모달 닫기
-                location.reload(); // 페이지 새로 고침
-            },
-            error: function(xhr, status, error) {
-                alert("칭찬 등록에 실패했습니다.");
-            }
-        });
-    });
-});
-
-
-// 매너칭찬 리스트
-document.getElementById('mannerTab').addEventListener('click', function() {
-    var memberNumber = '${member.member_number}'; // 실제 회원 번호로 대체
-    console.log('Member Number:', memberNumber); // 확인용 로그
-    var url = '/manner/items/' + encodeURIComponent(memberNumber);
-    
-    fetch(url)
-        .then(function(response) {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json(); // JSON 형식으로 응답 받기
-        })
-        .then(function(data) {
-		    var mannerList = document.getElementById('mannerList');
-		    mannerList.innerHTML = ''; // 기존 내용 지우기
-		
-		    // 데이터가 있을 경우 출력
-		    data.forEach(function(manner) {
-		        var li = document.createElement('li');
-		        li.innerHTML = manner.description + '<span class="count">' + manner.mcount + '명</span>'; // '명' 추가
-		        mannerList.appendChild(li);
-		    });
-		})
-        .catch(function(error) {
-            console.error('Error:', error);
-        });
-});
-
-//각 탭의 버튼 숨김, 출력
+// 각 탭의 버튼 숨김, 출력
 $(document).ready(function() {
-    const chatRoomStatus = ${chat_roomVO != null ? chat_roomVO.status : 4}; // null 체크 추가
-
     // 초기 상태 설정
-    $('#addReplyBtn').hide(); // 후기 등록 버튼 기본 숨김
-    $('#mannerButton').hide(); // 칭찬 등록 버튼 기본 숨김
-
-    // 초기 탭 설정: 항상 후기 탭으로 설정
+    $('#addReplyBtn').show(); // 후기 등록 버튼 기본 숨김
     $('a[href="#reviews"]').tab('show'); // 초기 탭을 후기 탭으로 설정
-
-    // 페이지 로드 시 거래 상태에 따라 후기 등록 버튼 보이기
-    if (chatRoomStatus === 4) {
-        $('#addReplyBtn').show(); // 거래 상태가 4일 때 후기 등록 버튼 보이기
-    }
 
     // 탭 전환 시 이벤트 처리
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -302,31 +223,11 @@ $(document).ready(function() {
         if (target === '#reviews') {
             // 후기 탭일 때 페이징 처리 보이기
             replyPageFooter.show();
+            $('#addReplyBtn').show(); // 후기 탭일 때 후기 등록 버튼 보이기
         } else {
             // 다른 탭일 때 페이징 처리 숨기기
             replyPageFooter.hide();
-        }
-        
-        if (target === '#reviews') {
-            // 후기 탭으로 돌아올 때
-            if (chatRoomStatus === 4) {
-                $('#addReplyBtn').show(); // 거래 상태가 4일 때 후기 등록 버튼 보이기
-            } else {
-                $('#addReplyBtn').hide(); // 거래 상태가 4가 아닐 경우 숨기기
-            }
-            $('#mannerButton').hide(); // 칭찬 등록 버튼 숨기기
-        } else if (target === '#manner') {
-            // 칭찬 탭으로 전환할 때
-            if (chatRoomStatus === 4) {
-                $('#mannerButton').show(); // 거래 상태가 4일 때 칭찬 등록 버튼 보이기
-            } else {
-                $('#mannerButton').hide(); // 거래 상태가 4가 아닐 경우 숨기기
-            }
-            $('#addReplyBtn').hide(); // 후기 등록 버튼 숨기기
-        } else {
-            // 다른 탭에서는 모두 숨기기
-            $('#addReplyBtn').hide();
-            $('#mannerButton').hide();
+            $('#addReplyBtn').hide(); // 다른 탭에서는 모두 숨기기
         }
     });
 });

@@ -23,10 +23,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController // Rest로 응답 함!!! -> view-jsp가 아닌 json, xml로 나옴
-@RequestMapping("/replies") // http://localhost:80/replies/???
+@RequestMapping("/replies") // http://localhost:80/re_replies/???
 @Log4j2
 @AllArgsConstructor // new Re_replyController(Re_replyService);
 public class Re_reply_controller {
+	// 대댓글 추가
+		// http://localhost:80/re_replies/new (json으로 입력 되면 객체로 저장됨)
 
 	private Re_replyService service;
 	

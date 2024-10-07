@@ -5,22 +5,20 @@
 <mapper namespace="com.potato.mapper.Manner_mapper">
 
 <!-- 회원의 매너칭찬 리스트 조회 -->
-<select id="findAllByMember" parameterType="java.lang.String" resultType="com.potato.domain.MannerVO">
-    <![CDATA[
-    SELECT * FROM manner
-    WHERE member_number = #{member_number}
-    ORDER BY mcount DESC
-    ]]>
-</select>
 
 <!-- 칭찬하기 데이터 전송 -->
-<update id="incrementMannerCount">
+<insert id="insertManner" parameterType="com.potato.domain.MannerVO">
 	<![CDATA[
-    UPDATE manner
-    SET mcount = mcount + 1
-    WHERE manner_number = #{manner_number}
-    AND member_number = #{member_number}
+    INSERT INTO manner (id, member_number, rating)
+    VALUES (#{id}, #{member_number}, #{rating})
     ]]>
-</update>
+</insert>
+
+<!-- 회원별 매너칭찬 리스트 출력 -->
+<select id="selectMannerItems" parameterType="String" resultType="com.potato.domain.MannerVO">
+	<![CDATA[
+	SELECT * FROM manner WHERE member_number = #{member_number}
+	]]>
+</select>
 
 </mapper>

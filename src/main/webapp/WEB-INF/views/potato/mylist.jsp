@@ -4,7 +4,12 @@
 <link rel="stylesheet" href="/resources/css/mypage.css">
 <div class="mypage-container">
 	<div class="mypage-member">
+		<c:if test="${check!=sessionScope.id}">
+		<h2><c:out value="${check}" />님의 활동내역</h2>
+		</c:if>
+		<c:if test="${check==sessionScope.id}">
 		<h2>나의 활동내역</h2>
+		</c:if>
 		<div class="member-info">
 			<table class="member-table">
 				<tr>
@@ -38,7 +43,7 @@
 				</tr>
 				<c:forEach var="reply" items="${replyVO}">
 				<tr>
-					<td><c:out value="${reply.id}" /></td>
+					<td><c:out value="${reply.writer}" /></td>
 					<td><fmt:formatDate value="${reply.regidate}" pattern="yyyy년 MM월 dd일" /></td>
 				</tr>
 				</c:forEach>

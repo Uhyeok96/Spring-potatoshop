@@ -29,8 +29,7 @@ public class MemberService_impl implements MemberService {
 	@Override
 	public int register(MemberVO member) {
 		// TODO 1.회원가입
-		Ulid ulid = UlidCreator.getUlid();
-		member.setMember_number(ulid.toString());
+		
 		return mapper.register(member);
 	} //성공 : 1 , 실패 : 0
 
@@ -145,7 +144,35 @@ public class MemberService_impl implements MemberService {
 		return mapper.find_pass(member);
 	}
 
-	
+	@Override
+	public void register2(MemberVO member) {
+		// TODO 20.[트리거문제] 회원가입시 user테이블도 같이 생성
+		mapper.register2(member);
+	}
+
+	@Override
+	public void delete2(MemberVO memberVO) {
+		// TODO 21.[트리거문제] 회원탈퇴시 X_member테이블로 데이터 옮기기
+		mapper.delete2(memberVO);
+	}
+
+	@Override
+	public void register3(MemberVO member) {
+		// TODO 22.[트리거문제] 회원가입시 login_check테이블도 같이 생성
+		mapper.register3(member);
+	}
+
+	@Override
+    public long getPay(String member_number) {
+		// TODO 23.회원 pay 정보 조회
+        return mapper.getPay(member_number);
+    }
+
+    @Override
+    public long getPoint(String member_number) {
+    	// TODO 24.회원 point 정보 조회
+        return mapper.getPoint(member_number);
+    }
 
 
 }

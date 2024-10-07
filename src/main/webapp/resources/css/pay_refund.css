@@ -1,0 +1,177 @@
+/* pay_refund */
+#phoneAuthPopup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.AmountShortcut_shortcut-list__pEIG9 {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+.AmountShortcut_item__LIolC {
+    flex: 1;
+    border-right: 1px solid #ccc;
+}
+.AmountShortcut_item__LIolC:last-child {
+    border-right: none;
+}
+.AmountShortcut_button-amount__tuXDw {
+    width: 100%;
+    padding: 10px;
+    background-color: #d4b300;
+    color: #333;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+}
+.AmountShortcut_button-amount__tuXDw:hover {
+    background-color: #c69f00;
+}
+.AmountShortcut_item__LIolC:first-child .AmountShortcut_button-amount__tuXDw {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.AmountShortcut_item__LIolC:last-child .AmountShortcut_button-amount__tuXDw {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.input-container {
+    position: relative;
+}
+#amount {
+    width: 100%;
+    padding-right: 40px;
+    -moz-appearance: textfield;
+}
+#amount::-webkit-inner-spin-button, 
+#amount::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.clear-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ff0000;
+    font-size: 18px;
+}
+
+#refund-container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #dc3545; /* 버튼 색상: 빨간색 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #c82333; /* 버튼 hover 시 색상 변화 */
+}
+
+/* pay_info */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+#profile-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 100px;
+    margin-left: 430px;
+}
+.profile_photo img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+#article-profile-left {
+    display: flex;
+    flex-direction: column;
+}
+#info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+    padding: 20px;
+    background-color: #fff9e6;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 20px auto;
+}
+.info-section {
+    flex: 1;
+    text-align: left;
+    margin: 0 10px;
+}
+.info-section h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.info-section p {
+    font-size: 20px;
+    margin-top: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    color: #333;
+}
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #6c757d;
+}

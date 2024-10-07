@@ -39,7 +39,7 @@ where member_number=#{member_number}
 <!-- 5.마이 페이지 보기2 -->
 <select id="mypage2" resultType="UserVO">
 <![CDATA[
-select reports, temper,trades 
+select reports,temper,trades 
 from user_table
 where user_number=#{member_number}
 ]]>
@@ -165,7 +165,41 @@ values(#{report_number},#{writer_id},#{defendant_id},#{defendant},#{content})
 ]]>
 </update>
 
+<!-- 20.[트리거문제] 회원가입시 user테이블도 같이 생성 -->
+<insert id="register2">
+<![CDATA[
+insert into user_table (user_number) values (#{member_number})
+]]>
+</insert>
 
+<!-- 21.[트리거문제] 회원탈퇴시 X_member테이블로 데이터 옮기기 -->
+<insert id="delete2">
+<![CDATA[
+insert into x_member (member_number,id,pass,name,nickname,phone,address,grade,regidate,leave_date) 
+values(#{member_number},#{id},#{pass},#{name},#{nickname},#{phone},#{address},#{grade},#{regidate},sysdate)
+]]>
+</insert>
+
+<!-- 22.[트리거문제] 회원가입시 login_check테이블도 같이 생성 -->
+<insert id="register3">
+<![CDATA[
+insert into login_check (member_number,id) values(#{member_number},#{id})
+]]>
+</insert>
+
+<!-- 23.회원 pay 정보 조회 -->
+<select id="getPay" parameterType="String" resultType="long">
+	<![CDATA[
+    SELECT pay FROM member WHERE member_number = #{member_number}
+    ]]>
+</select>
+
+<!-- 24.회원 point 정보 조회 -->
+<select id="getPoint" parameterType="String" resultType="long">
+	<![CDATA[
+    SELECT point FROM member WHERE member_number = #{member_number}
+    ]]>
+</select>
 
 
 </mapper>

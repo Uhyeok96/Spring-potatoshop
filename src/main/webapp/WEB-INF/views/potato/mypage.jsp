@@ -7,7 +7,7 @@
 	
 		<div class="profile_image">
 		<div class="profile_photo">
-			<img id="img_thumb" src="${pageContext.request.contextPath}/resources/images/${sessionScope.profile_image}" alt="" width="100" height="100">
+			<img id="img_thumb" src="${pageContext.request.contextPath}/resources/upload/${sessionScope.profile_image}" alt="" width="100" height="100">
 			<span class="mask"></span>
 		</div>
 			<form id="profileImageForm" enctype="multipart/form-data">
@@ -18,7 +18,7 @@
 		</div>
 		
 		<div class="mypage-member">
-		<a href="/potato/mylist" >나의 활동내역 확인하기</a>
+		<a href="/potato/mylist?number=${sessionScope.member_number}&id=${sessionScope.id}" >나의 활동내역 확인하기</a>
 			<h2>마이페이지</h2>
 			<div class="member-info">
 				<table class="member-table">

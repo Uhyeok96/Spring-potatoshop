@@ -72,12 +72,25 @@
 <body>
 	<div class="hero_area">
 		<!-- header section strats -->
+		<div class="notification_bar" ></div>
 		<header class="header_section">
 			<nav class="navbar navbar-expand-lg custom_nav-container ">
+				<c:choose>
+				<c:when test="${sessionScope.member_number=='admin'}">
 				<a class="navbar-brand"
-					href="${pageContext.request.contextPath}/home"> <span>
-						🥔 감자마켓 </span>
+					href="${pageContext.request.contextPath}/admin/home"> <div class="logo">
+    <img src="/resources/images/potato_logo.png" alt="감자 아이콘">
+  </div>
 				</a>
+				</c:when>
+				<c:otherwise>
+				<a class="navbar-brand"
+					href="${pageContext.request.contextPath}/home"> <div class="logo">
+    <img src="/resources/images/potato_logo.png" alt="감자 아이콘">
+  </div>
+				</a>
+				</c:otherwise>
+				</c:choose>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -88,10 +101,21 @@
 				<div class="collapse navbar-collapse innerpage_navbar"
 					id="navbarSupportedContent">
 					<ul class="navbar-nav  ">
-						<li class="nav-item "><a class="nav-link" href="/home">홈
+					<c:choose>
+				<c:when test="${sessionScope.member_number=='admin'}">
+				<li class="nav-item "><a class="nav-link" href="/admin/home">홈
 								<span class="sr-only">(current)</span>
 						</a></li>
-						<li class="nav-item active"><a class="nav-link"
+				</c:when>
+				<c:otherwise>
+				<li class="nav-item "><a class="nav-link" href="/home">홈
+								<span class="sr-only">(current)</span>
+						</a></li>
+				</c:otherwise>
+				</c:choose>
+						
+						
+						<li class="nav-item "><a class="nav-link"
 							href="/shop/list"> 중고거래 </a></li>
 					</ul>
 					<div class="user_option">
@@ -103,7 +127,7 @@
 							</c:when>
 							<c:otherwise>
 								<a
-									href="/potato/mypage?member_number=<c:out value='${sessionScope.member_number}'/>">
+									href="/potato/mypage">
 									<i class="fa fa-user" aria-hidden="true"></i> <span>${sessionScope.nickName}</span>
 								</a>
 								<a href="#" id="alarm_button"><svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -115,28 +139,43 @@
 									<div class="alarm_header">
 									  <strong>나의 알림</strong>
 									  	<div class="option">
-									  	<input type="hidden" id="session_number" value="${sessionScope.member_number}"/>
-									  	<a role="button" href="#" id="del_all" class="del_all" aria-pressed="false">전체삭제</a>
+							
+									  	
 									<div class="alarm_container">
 									<ul>
+									<c:if test="${sessionScope.alarms==null||sessionScope.alarms==''}">
+									<span>알림이 없습니다.</span>
+									</c:if>
 									<c:forEach var="alarm" items="${sessionScope.alarms}">
+										<c:if test="${alarm.status==0}">
 										<li>
-										<a href="/alarm/func" id="alarm_func">
-										<input type="hidden" id="a_number" value="${alarm.alarm_number}"/>
-										<input type="hidden" id="a_member_number" value="${alarm.member_number}"/>
-										<input type="hidden" id="a_target_type" value="${alarm.target_type}"/>
-										<input type="hidden" id="a_target_key" value="${alarm.target_key}"/>
-										<input type="hidden" id="a_status" value="${alarm.status}"/>
-										<c:out value="${alarm.contents}"/>
+										<a href="#" id="alarm_func" data-alarm-number="${alarm.alarm_number}" data-member-number="${alarm.member_number}" data-target-type="${alarm.target_type}" data-target-key="${alarm.target_key}" data-status="${alarm.status}">
+										<span style="color: red;">new </span><c:out value="${alarm.contents}"/>
 										</a>
-										<a href="/alarm/delete" id="alarm_del" role="button" class="bt_item _del" aria-pressed="false">
+										<a href="#" id="alarm_del" role="button" class="bt_item _del" aria-pressed="false" data-alarm-number="${alarm.alarm_number}" data-member-number="${alarm.member_number}" data-target-type="${alarm.target_type}" data-target-key="${alarm.target_key}" data-status="${alarm.status}">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
 </svg></a>
-										</li> 
+										</li>
+										</c:if>
+										<c:if test="${alarm.status==1}">
+										<li>
+										<div class=readed_alarm>
+										<a href="#" id="alarm_func" data-alarm-number="${alarm.alarm_number}" data-member-number="${alarm.member_number}" data-target-type="${alarm.target_type}" data-target-key="${alarm.target_key}" data-status="${alarm.status}">
+										<span style="color: gray;">[읽음] </span><c:out value="${alarm.contents}"/>
+										</a>
+										<a href="#" id="alarm_del" role="button" class="bt_item _del" aria-pressed="false" data-alarm-number="${alarm.alarm_number}" data-member-number="${alarm.member_number}" data-target-type="${alarm.target_type}" data-target-key="${alarm.target_key}" data-status="${alarm.status}">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+</svg></a></div>
+										</li>
+										</c:if>
 									</c:forEach>
-										<li><a href="#" id="hide">닫기</a></li>
 									</ul>
+									<div class="notification-actions">
+    <a role="button" href="#" id="del_all" class="del_all" aria-pressed="false" data-member-number="${alarm.member_number}" >전체삭제</a>
+    <a href="#" id="hide">닫기</a>
+  </div>
 									</div>
 									</div>
 									</div>
@@ -147,11 +186,13 @@
 								</a>
 								<a href="/potato/chat_list"><span>채팅목록</span> </a>
 								<a href="/potato/likes_list"><span>관심목록</span> </a>
+								<a href="/pay/pay_info"><span>감자페이</span> </a>
 							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
 			</nav>
+			<div class="notification_bar2" ></div>
 			<!-- 로그인 모달 -->
 			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
 				aria-labelledby="loginModalLabel" aria-hidden="true">

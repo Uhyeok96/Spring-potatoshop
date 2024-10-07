@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.f4b6a3.ulid.Ulid;
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.potato.domain.MannerVO;
 import com.potato.service.Manner_service;
 
@@ -30,27 +32,28 @@ public class Manner_controller {
 	@Autowired
     private Manner_service manner_service;
     
-	// http://localhost:80/manner/items/{member_number}
-	@GetMapping(value = "/items/{member_number}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<MannerVO>> getMannerItems(@PathVariable("member_number") String memberNumber) {
-	    List<MannerVO> mannerList = manner_service.getAllMannerItems(memberNumber);
-	    if (mannerList == null || mannerList.isEmpty()) {
-	        return ResponseEntity.noContent().build();
-	    }
-	    return ResponseEntity.ok(mannerList);
-	}
-    
     // 칭찬하기 데이터 전송
-	@PostMapping("/submit")
-    public ResponseEntity<String> submitManner(@RequestParam int manner_number, @RequestParam String member_number) {
-        boolean isSuccess = manner_service.incrementMannerCount(manner_number, member_number);
+    @PostMapping(value = "/submit", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE}) // 입력값은 JSON으로
+    public ResponseEntity<String> create(@RequestBody MannerVO manner) {
+        log.info("MannerVO 객체 입력 값: " + manner); // 파라미터로 넘어온 값 출력 테스트
         
-        if (isSuccess) {
-            System.out.println("칭찬이 등록되었습니다: " + manner_number + ", " + member_number);
-            return ResponseEntity.ok("칭찬이 등록되었습니다.");
-        } else {
-            System.err.println("칭찬 등록 실패: " + manner_number + ", " + member_number);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("칭찬 등록에 실패했습니다.");
-        }
+        // 칭찬 번호 생성
+        Ulid ulid = UlidCreator.getUlid();
+		manner.setId(ulid.toString());
+
+        int insertCount = manner_service.submitManner(manner); // 서비스 호출하여 SQL 처리
+        
+        log.info("서비스+매퍼 처리 결과: " + insertCount);
+        
+        return insertCount == 1 
+            ? new ResponseEntity<>("success", HttpStatus.OK) // 200 정상
+            : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 서버 오류
+    }
+    
+    // 회원별 매너칭찬 리스트 출력
+    @GetMapping("/items/{member_number}")
+    public ResponseEntity<List<MannerVO>> getMannerItems(@PathVariable String member_number) {
+        List<MannerVO> mannerList = manner_service.getAllMannerItems(member_number);
+        return new ResponseEntity<>(mannerList, HttpStatus.OK);
     }
 }

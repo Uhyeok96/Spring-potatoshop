@@ -14,10 +14,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.github.f4b6a3.ulid.Ulid;
 import com.github.f4b6a3.ulid.UlidCreator;
+import com.potato.domain.AlarmsVO;
 import com.potato.domain.BoardVO;
 import com.potato.domain.Login_checkVO;
 import com.potato.domain.MemberVO;
 import com.potato.domain.ReportVO;
+import com.potato.service.AlarmService;
 import com.potato.service.BoardService;
 import com.potato.service.MemberService;
 
@@ -32,7 +34,7 @@ import lombok.extern.log4j.Log4j2;
 public class Member_controller {
 	
 	private MemberService service;
-	private BoardService board_service;
+	private AlarmService a_service;
 	
 	//get으로 들어온 경우, form작성할 수 있게 jsp파일 띄우기
 	@GetMapping({"/register","/find_id","/find_pass","/login"})
@@ -42,15 +44,20 @@ public class Member_controller {
 	//회원가입 form에 작성된 데이터 DB에 저장후 메인페이지로 넘기기
 	@PostMapping("/register")
 	public String register(MemberVO memberVO,RedirectAttributes rttr) {
+		Ulid ulid = UlidCreator.getUlid();
+		String member_number =ulid.toString();
+		memberVO.setMember_number(member_number);
 		int result = service.register(memberVO);
+		service.register2(memberVO);
+		service.register3(memberVO);
 		if(result==1) {
-		rttr.addAttribute("회원가입을 축하드립니다");
+		rttr.addFlashAttribute("message", memberVO.getNickName()+"님 회원가입을 축하드립니다");
 		return "redirect:/home";}
 		if(result==0) {
 		rttr.addFlashAttribute("errorMessage", "회원가입에 실패했습니다. 다시 시도해주세요.");
 	    return "redirect:/register";
 		}
-		return "redirect:/potato/home";
+		return "redirect:/home";
 	}
 	
 	//회원정보 보기
@@ -83,10 +90,12 @@ public class Member_controller {
 	//나의 활동내역 보기
 	//톰캣 세션영역에 저장된 member_number,id를 이용하여 자료조회 후 model에 저장
 	@GetMapping("/mylist")
-	public void mylist(Model model,HttpSession session) {
+	public void mylist(@RequestParam("number")String member_number,@RequestParam("id")String id,Model model,HttpSession session) {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId((String) session.getAttribute("id"));
-		memberVO.setMember_number((String)session.getAttribute("member_number"));
+		memberVO.setId(id);
+		memberVO.setMember_number(member_number);
+		model.addAttribute("check",id);
+		
 		
 		model.addAttribute("replyVO", service.mylist1(memberVO));
 		model.addAttribute("re_replyVO", service.mylist2(memberVO));
@@ -94,6 +103,7 @@ public class Member_controller {
 		model.addAttribute("reportVO", service.mylist4(memberVO));
 		
 	}
+	
 	
 	//좋아요 관심 리스트 보기
 	//톰캣 세션영역에 저장된 member_number로 자료 조회
@@ -119,18 +129,12 @@ public class Member_controller {
 	
 	@GetMapping("/review")
     public void review(@RequestParam("member_number") String member_number, Model model) {
-        // Board 데이터를 조회
-        //BoardVO board = board_service.get(board_number);
-        //model.addAttribute("board", board);
-
-        // Writer Number를 통해 Member 데이터를 조회
-        //String writer_number = board.getWriter_number(); // BoardVO에서 writer_number를 가져옴
         if (member_number != null) {
         	MemberVO member2 = new MemberVO();
         	member2.setMember_number(member_number);
             MemberVO member = service.profile(member2);
-            model.addAttribute("user", service.mypage2(member));
             model.addAttribute("member", member);
+    		model.addAttribute("user",service.mypage2(member)); //판매자의 온도
         }
         
     }
@@ -150,6 +154,9 @@ public class Member_controller {
 		        session.setAttribute("address", member2.getAddress());
 		        session.setAttribute("profile_image", member2.getProfile_image());
 		        service.login_check(member2.getMember_number(), 1); //로그인 됨 상태
+		        AlarmsVO alarms = new AlarmsVO();
+		        alarms.setMember_number(member2.getMember_number());
+		        session.setAttribute("alarms", a_service.get_alarms(alarms));
 		        return "/home";
 			case 1 :
 				return "/potato/login";

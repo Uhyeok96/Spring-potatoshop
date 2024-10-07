@@ -76,7 +76,7 @@
 		<!-- header section strats -->
 		<header class="header_section">
 			<nav class="navbar navbar-expand-lg custom_nav-container ">
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/admin/home"> <span> 🥔 감자마켓
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/home"> <span> 🥔 감자마켓
 				</span>
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -93,7 +93,12 @@
 								<span class="sr-only">(current)</span>
 						</a></li>
 						<li class="nav-item active"><a class="nav-link"
-							href="/shop/list"> 중고거래 </a></li>
+							href="../admin/memberGrade?member_number=${sessionScope.member_number}"> 회원관리 </a></li>
+							
+							<li class="nav-item active"><a class="nav-link"
+							href="/shop/list"> 직원관리 </a></li>
+							<li class="nav-item active"><a class="nav-link"
+							href="../admin/notiView?member_number=${sessionScope.member_number}">관리자 공지</a></li>
 					</ul>
 					<div class="user_option">
 						<c:choose>
@@ -109,9 +114,6 @@
 								</a>
 								<a href="#" id="logoutLink"> <i class="fa fa-sign-out"
 									aria-hidden="true"></i> <span>로그아웃</span>
-								</a>
-								<a
-									href="/potato/chat_list"><span>채팅목록</span>
 								</a>
 									
 							</c:otherwise>

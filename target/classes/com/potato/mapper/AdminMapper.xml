@@ -10,39 +10,62 @@
   ]]>
   </select> <!-- 관리자 정보 확인(완) -->
   
+  <select id="readMember" resultType="MemberVO">
+  <![CDATA[
+      select * from member
+  ]]>
+  </select> <!-- 전체 회원 확인  -->
+  
   <select id="getMemberList" resultType="MemberVO">  
   <![CDATA[
-    SELECT *
+         SELECT *
     FROM member
     WHERE id = #{id}
   ]]>
   </select> <!-- 회원 정보 검색 -->
+  
+   <select id="memberGrade" resultType="MemberVO">  
+  <![CDATA[
+         SELECT *
+    FROM member
+    WHERE grade = #{grade}
+  ]]>
+  </select> <!-- 회원 등급 분류 -->
 
   
   <insert id="insertBoard">
   <![CDATA[
-		insert into board(board_number,types,title, content, writer, writer_number,
-		status, photo_name, regidate)
-		values (seq_board.nextval ,#{types}, #{title}, #{content}, #{writer},
-		#{writer_number}, #{status}, #{photo_name}, sysdate)
+		 INSERT INTO notification (writer, title, content, regidate, important, notice_number)
+    VALUES (
+      #{writer},
+      #{title},
+      #{content},
+      sysdate,
+      COALESCE(#{important}, 0),
+      notice_seq.nextval
+    )
 		]]>
   </insert> <!-- 공지 추가 -->
   
   <delete id="deleteReport">
   <![CDATA[
-     delete from board where board_number = #{board_number} 
+     delete from notification where notice_number = #{notice_number} 
   ]]>
   </delete> <!-- 게시판 삭제 -->
   
-  <delete id="replyDelete">
-  <![CDATA[
-     delete from reply where id= #{id} 
-  ]]>
-  </delete> <!-- 댓글 삭제 -->
+ <update id="noticeUpdate">
+   <![CDATA[
+      update notification set
+      title = #{title},
+      content = #{content},
+      regidate = sysdate
+      where notice_number = #{notice_number}
+    ]]>
+  </update> <!-- 관리자 공지 수정 -->
   
   <select id="readReport" resultType="ReportVO">
   <![CDATA[
-     select  * FROM reports where status=0
+     select  * FROM reports where status=0 order by regidate desc
   ]]>
   </select> <!-- 신고내역 리스트(사용함) -->
   
@@ -50,7 +73,7 @@
   <![CDATA[
      update reports
      set
-     status = #{status},
+     status = 1,
      done_date = sysdate
      where report_number=#{report_number}
   ]]>
@@ -58,7 +81,7 @@
   
    <select id="viewBlack" resultType="MemberVO">
     <![CDATA[
-       select * from member where grade=4
+       select * from member where grade=4 order by regidate desc
    ]]>
    </select> <!-- 블랙리스트 확인 (사용함)-->
      
@@ -69,7 +92,7 @@
       update_date = sysdate
       where member_number = #{member_number}
     ]]>
-  </update> <!-- 회원 등급 등록 (사용함) -->
+  </update> <!-- 블랙리스트 등록 (사용함) -->
   
      <select id="get_report" resultType="ReportVO">
   <![CDATA[
@@ -77,12 +100,12 @@
   ]]>
   </select> <!-- 신고내역 리스트(사용함) -->
   
-  <update id="clearBlack">
-<![CDATA[ UPDATE member SET grade = 0 WHERE member_number = #{memberNumber} ]]>
-</update> <!-- 블랙리스트 해제 -->
-
-<select id="notification" resultType="com.potato.domain.NotificationVO">
-     SELECT * FROM notification
+  <select id="notification" resultType="NotificationVO">
+     SELECT * FROM notification  ORDER BY regidate desc
 </select> <!-- 관리자 공지 확인 -->
+  
+  <select id="notice" resultType="NotificationVO">
+  select * from notification where notice_number = #{notice_number}
+  </select>
   
   </mapper>

@@ -1,9 +1,5 @@
 package com.potato.service;
 
-import java.util.List;
-
-import com.potato.domain.MemberVO;
-import com.potato.domain.Re_replyVO;
 import com.potato.domain.ReplyPageDTO;
 import com.potato.domain.ReplyVO;
 import com.potato.domain.Reply_critera;

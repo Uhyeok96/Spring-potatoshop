@@ -4,11 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import com.potato.domain.ReplyVO;
-import com.potato.domain.MemberVO;
 import com.potato.domain.Reply_critera;
-import com.potato.domain.Re_replyVO;
 
 @Mapper
 public interface ReplyMapper {
