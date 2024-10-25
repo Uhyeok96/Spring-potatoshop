@@ -89,4 +89,22 @@
 
 - 관리자 게시판 (공지 등록, 수정, 삭제 등)
 
+<br><br>
 ## 한 눈에
+
+[감자마켓 홈페이지 이동](http://mbc-webcloud.iptime.org:6302/home) <http://mbc-webcloud.iptime.org:6302/home>
+
+**TEST 계정 로그인**
+
+ID : test1
+
+PW : q1
+
+![image](https://github.com/user-attachments/assets/8b770c18-0490-4b6a-8d51-ecf4ff77fdb2)
+![image](https://github.com/user-attachments/assets/bc668191-c866-4434-a5e5-dd30d3e3fce3)
+![image](https://github.com/user-attachments/assets/56740c3f-0798-48e7-a8f2-80e31bfb37ae)
+
+
+
+
+
