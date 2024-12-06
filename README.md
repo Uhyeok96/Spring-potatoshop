@@ -106,6 +106,8 @@ ID : test1
 
 PW : q1
 
+**감자마켓 발표자료 [보러가기](https://www.canva.com/design/DAGYgc3wrYo/56auKc7GKEuqK0VABujtSA/view?utm_content=DAGYgc3wrYo&utm_campaign=designshare&utm_medium=link&utm_source=editor)**
+
 ![image](https://github.com/user-attachments/assets/8b770c18-0490-4b6a-8d51-ecf4ff77fdb2)
 ![image](https://github.com/user-attachments/assets/bc668191-c866-4434-a5e5-dd30d3e3fce3)
 ![image](https://github.com/user-attachments/assets/56740c3f-0798-48e7-a8f2-80e31bfb37ae)
