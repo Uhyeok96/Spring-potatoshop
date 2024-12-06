@@ -90,6 +90,11 @@
 - 관리자 게시판 (공지 등록, 수정, 삭제 등)
 
 <br><br>
+
+## 발표 영상
+
+<br><br>
+
 ## 한 눈에
 
 [감자마켓 홈페이지 이동](http://mbc-webcloud.iptime.org:6302/home) <http://mbc-webcloud.iptime.org:6302/home>
