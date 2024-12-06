@@ -93,6 +93,7 @@
 
 ## 발표 영상
 <iframe width="946" height="532" src="https://www.youtube.com/embed/_e_7X1SDAw0" title="감자마켓 프로젝트 발표(김우혁)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/_e_7X1SDAw0" frameborder="0" gesture="media" allowfullscreen=""></iframe>
 <br><br>
 
 ## 한 눈에
