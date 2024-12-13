@@ -98,7 +98,7 @@
 
 ## 한 눈에
 
-[감자마켓 홈페이지 이동](http://mbc-webcloud.iptime.org:6302/home) <http://mbc-webcloud.iptime.org:6302/home>
+[감자마켓 홈페이지 이동](http://mbc-webcloud.iptime.org:6302/home) <http://mbc-webcloud.iptime.org:6302/home> (현재는 구동x)
 
 **TEST 계정 로그인**
 
